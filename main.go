@@ -1,7 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"log"
+)
 
-func main(){
-    fmt.Println("Yeah Buddy!")
+func main() {
+	store, err := NewPostGresStore()
+	if err != nil {
+		log.Fatal(err)
+	}
+	//
+	// fmt.Printf("%v\n", store)
+
+	if err := store.init(); err != nil {
+		log.Fatal(err)
+	}
+	server := NewAPIServer(":8080", store)
+	server.Run()
 }
