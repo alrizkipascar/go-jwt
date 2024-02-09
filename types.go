@@ -5,6 +5,11 @@ import (
 	"time"
 )
 
+type TransferRequest struct {
+	toAccount int `json:"toAccount"`
+	Amount    int `json:"amount"`
+}
+
 type CreateAccountRequest struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
@@ -17,6 +22,14 @@ type Account struct {
 	Number    int64     `json:"number"`
 	Balance   int64     `json:"balance"`
 	CreatedAt time.Time `json:"createdAt"`
+}
+
+type Task struct {
+	ID         int       `json:"id"`
+	TaskName   string    `json:"firstName"`
+	Status     int       `json:"status"`
+	TimePosted time.Time `json:"timeposted"`
+	// SubTask  []SubTask
 }
 
 func NewAccount(firstName, lastName string) *Account {
