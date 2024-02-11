@@ -7,3 +7,4 @@
 
 ## Another Lib
 1. Gorilla mux -> standard go is good, but it doesnt provide to get parameters, like regex and stuff.
+2. go jwt
