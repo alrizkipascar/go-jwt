@@ -1,5 +1,6 @@
 # NOTES
 
+There is something wrong with docker and main.go, I cannot move it to cmd
 
 ## LIBRARY
  github.com/gorilla/mux
@@ -24,3 +25,7 @@ docker start <CONTAINER_ID>
 ## Other Command
 
 export JWT_SECRET=hunter9999
+
+## SEEDING COMMAND
+------> ./bin/go-jwt --seed
+

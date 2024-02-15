@@ -59,6 +59,20 @@ func GetAccountByNumber(number int) (*models.Account, error) {
 	return nil, fmt.Errorf("account with number %d not found", number)
 }
 
+func GetAccountByEmail(email string) (*models.Account, error) {
+	s := GetDB()
+
+	rows, err := s.Query("SELECT * FROM ACCOUNT WHERE email = $1", email)
+
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		return ScanIntoAccount(rows)
+	}
+	return nil, fmt.Errorf("account with email %v not found", email)
+}
+
 func GetAccountByID(id int) (*models.Account, error) {
 	s := GetDB()
 
@@ -98,6 +112,7 @@ func ScanIntoAccount(rows *sql.Rows) (*models.Account, error) {
 	account := new(models.Account)
 	err := rows.Scan(
 		&account.ID,
+		&account.Email,
 		&account.FirstName,
 		&account.LastName,
 		&account.Number,

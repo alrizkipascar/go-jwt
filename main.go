@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// 8080
-	seed := flag.Bool("seed", true, "seed the db")
+	seed := flag.Bool("seed", false, "seed the db")
 	flag.Parse()
 
 	//Initialize database

@@ -1,4 +1,4 @@
-# JWT go from scratch (Not finished)
+# JWT go from scratch (Semi Finished)
 
 ## Main
 1. Go

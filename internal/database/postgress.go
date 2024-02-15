@@ -10,7 +10,7 @@ import (
 )
 
 // DatabaseURL represents the connection string to the database
-const DatabaseURL = "host=db user=postgres port=8001 dbname=postgres password=test sslmode=disable"
+// const DatabaseURL = "host=db user=postgres port=8001 dbname=postgres password=test sslmode=disable"
 
 var (
 	db   *sql.DB
@@ -18,23 +18,27 @@ var (
 )
 
 func GetDB() *sql.DB {
-	// connStr := "host=db user=postgres port=8001 dbname=postgres password=test sslmode=disable"
-	once.Do(func() {
-		// Initialize the database connection
-		conn, err := sql.Open("postgres", DatabaseURL)
-		if err != nil {
-			log.Fatal(err)
-		}
-		db = conn
+	connStr := "user=postgres port=8001 dbname=postgres password=test sslmode=disable"
+	fmt.Println("Connected to the database", connStr)
 
-		// Test the connection
-		err = db.Ping()
-		if err != nil {
-			log.Fatal(err)
-		}
+	// once.Do(func() {
+	// Initialize the database connection
+	conn, err := sql.Open("postgres", connStr)
+	fmt.Println("check", conn, err)
 
-		fmt.Println("Connected to the database")
-	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	db = conn
+
+	// Test the connection
+	err = db.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Connected to the database")
+	// })
 	return db
 	// connStr := "user=postgres dbname=postgres password=test sslmode=disable"
 	// db, err := sql.Open("postgres", connStr)
@@ -53,14 +57,20 @@ func GetDB() *sql.DB {
 
 func Init() error {
 	newdataBase := GetDB()
+	fmt.Println("==================1==================")
+
 	if err := createAccountTable(newdataBase); err != nil {
 		log.Fatal(err)
+		fmt.Println("==================2==================")
+
 		return err
 	}
 	return nil
 }
 
 func createAccountTable(s *sql.DB) error {
+	fmt.Println("==================3==================")
+
 	query := `create table if not exists account (
 		id serial primary key,
         email varchar(100),

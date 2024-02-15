@@ -20,8 +20,9 @@ func Login(w http.ResponseWriter, r *http.Request) error {
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		return err
 	}
+	acc, err := database.GetAccountByEmail(req.Email)
 
-	acc, err := database.GetAccountByNumber(int(req.Number))
+	// acc, err := database.GetAccountByNumber(int(req.Number))
 	if err != nil {
 		return err
 	}
@@ -34,9 +35,42 @@ func Login(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	resp := models.LoginResponse{
-		Token:  token,
-		Number: req.Number,
+	resp := models.LoginResponseEmail{
+		Token: token,
+		Email: req.Email,
+	}
+
+	fmt.Printf("%+v\n", acc)
+	return utils.WriteJSON(w, http.StatusOK, resp)
+}
+
+// EMAIL COMMENT
+
+func LoginWithEmail(w http.ResponseWriter, r *http.Request) error {
+	// if r.Method != "POST" {
+	// 	return fmt.Errorf("method not allowed %s", r.Method)
+	// }
+	var req models.LoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		return err
+	}
+
+	acc, err := database.GetAccountByEmail(req.Email)
+	if err != nil {
+		return err
+	}
+
+	if !acc.ValidPassword(req.Password) {
+		return fmt.Errorf("not authenticated")
+	}
+	token, err := auth.CreateJWT(acc)
+	if err != nil {
+		return err
+	}
+
+	resp := models.LoginResponseEmail{
+		Token: token,
+		Email: req.Email,
 	}
 
 	fmt.Printf("%+v\n", acc)
