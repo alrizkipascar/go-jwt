@@ -6,11 +6,32 @@ services:
   db:
     image: postgres
     restart: always
+    ports:
+      - 8001:5432
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: postgres
+    networks:
+      - external_network
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks: 
+      - external_network
+      
+networks:
+  external_network:
+    name: GeneralNetwork
