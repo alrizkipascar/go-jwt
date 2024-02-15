@@ -1,9 +1,10 @@
 FROM golang:1.21.6
 
-WORKDIR /usr/src/app
 
-COPY ./* ./
+COPY ./ /go/src/
 
-RUN go build -o ./bin/RESTAPI
+WORKDIR /go/src/cmd
 
-CMD ["./bin/RESTAPI"]
+RUN go build -o ./bin/go-jwt
+
+CMD ["./bin/go-jwt"]
