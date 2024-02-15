@@ -1,6 +1,14 @@
 # JWT go from scratch (Semi Finished)
 
-## Main
+## Function
+1. Login with JWT
+2. CRUD Account
+
+## Next Update
+1. Change ID to UUID
+
+
+## Tools
 1. Go
 2. Postgre
 3. Docker
