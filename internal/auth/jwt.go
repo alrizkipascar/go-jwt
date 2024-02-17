@@ -10,8 +10,8 @@ import (
 
 func CreateJWT(account *models.Account) (string, error) {
 	claims := &jwt.MapClaims{
-		"expiresAt":     15000,
-		"accountNumber": account.Number,
+		"expiresAt":    15000,
+		"accountEmail": account.Email,
 	}
 
 	secret := os.Getenv("JWT_SECRET")

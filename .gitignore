@@ -8,6 +8,7 @@
 *.so
 *.dylib
 .env
+*go-jwt
 # Test binary, built with `go test -c`
 *.test
 *.txt

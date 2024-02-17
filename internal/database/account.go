@@ -10,17 +10,20 @@ import (
 func CreateAccount(acc *models.Account) error {
 	s := GetDB()
 	query := `insert into account  
-    (email, first_name, last_name, number, encrypted_password, balance, created_at)
+    (email, uuid, first_name, last_name, number, activated, encrypted_password, balance, created_at)
     values
-    ( $1, $2, $3, $4, $5, $6, $7)
+    ( $1, $2, $3, $4, $5, $6, $7, $8, $9)
     `
 
 	_, err := s.Query(
 		query,
+
 		acc.Email,
+		acc.UUID,
 		acc.FirstName,
 		acc.LastName,
 		acc.Number,
+		acc.Activated,
 		acc.EncryptedPassword,
 		acc.Balance,
 		acc.CreatedAt)
@@ -113,9 +116,11 @@ func ScanIntoAccount(rows *sql.Rows) (*models.Account, error) {
 	err := rows.Scan(
 		&account.ID,
 		&account.Email,
+		&account.UUID,
 		&account.FirstName,
 		&account.LastName,
 		&account.Number,
+		&account.Activated,
 		&account.EncryptedPassword,
 		&account.Balance,
 		&account.CreatedAt)
@@ -123,4 +128,21 @@ func ScanIntoAccount(rows *sql.Rows) (*models.Account, error) {
 		return nil, err
 	}
 	return account, err
+}
+
+func ActivatedAccount(id int) error {
+	s := GetDB()
+	query := `
+	UPDATE account
+	SET activated = $1
+	WHERE ID = $2
+	`
+
+	_, err := s.Query(query, 1, id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

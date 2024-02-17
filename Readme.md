@@ -1,12 +1,12 @@
 # JWT go from scratch (Semi Finished)
 
+## On going
+1. Activate/Confirmation Email.
+2. Able to login with google.
+
 ## Function
 1. Login with JWT
 2. CRUD Account
-
-## Next Update
-1. Change ID to UUID
-
 
 ## Tools
 1. Go
