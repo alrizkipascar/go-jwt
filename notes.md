@@ -11,9 +11,12 @@ There is something wrong with docker and main.go, I cannot move it to cmd
  docker run --name some-postgres -e POSTGRES_PASSWORD=test -p 5432:5432 -d postgres
 
  <!-- FOR SOME REASON YOU NEED TO CHANGE THE PORT to  connect with pgAdmin -->
+ 
+### You need to change the port to  connect with pgAdmin (Windows problem I think)
 docker run --name jwt-postgres -e POSTGRES_PASSWORD=test -p 8001:5432 -d postgres
 
 <!-- Start Docker -->
+### Start Docker
 docker start <CONTAINER_ID>
 
 ## POSTGRES CONNECT FROM DOCKER to Local PGAdmin
