@@ -9,6 +9,7 @@ import (
 	router "github.com/alrizkipascar/go-jwt/internal/api/routers"
 	"github.com/alrizkipascar/go-jwt/internal/database"
 	"github.com/alrizkipascar/go-jwt/internal/utils"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -27,11 +28,17 @@ func main() {
 	}
 	//Routes definition
 	router := router.InitRouter()
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+	})
+	handler := c.Handler(router)
 	//Port definition
 	port := 8080
 	//Start server
-	log.Println("JSON API server running on port: ", port)
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), router); err != nil {
+	log.Println("JSON API server running on port: ", handler)
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), handler); err != nil {
 		log.Fatal("Web server (HTTPS): ", err)
 	}
 }
